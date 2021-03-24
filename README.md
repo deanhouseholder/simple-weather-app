@@ -24,4 +24,4 @@ Used https://freegeoip.app/ and https://www.metaweather.com/api/ as requested.
 
 See inline comments for walk-through.
 
-If I had more time, I would add tests, scrub user input, add a solution to missing cities, and improve the icons.
+I completed this project in about 6 hours. If I had more time, I would add tests, scrub user input, add a solution to missing cities, and improve the icons.
