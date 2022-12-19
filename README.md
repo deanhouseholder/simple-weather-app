@@ -1,7 +1,9 @@
 # Simple Weather App
 
 Made for eSalon by Dean Householder on 23 Mar 2021
+Updated for Swoogo on 19 Dec 2022 to use OpenWeather API instead of MetaWeather
 Hosted on https://weather.deanhouseholder.com/
+
 
 ## Files added/modified include:
 | File path                                                                                                                                                         | Description                                               |
@@ -20,7 +22,7 @@ Hosted on https://weather.deanhouseholder.com/
 | <a href="https://github.com/deanhouseholder/simple-weather-app/blob/main/routes/web.php">routes/web.php</a>                                                       | Added the main route                                      |
 
 Implemented in Laravel/Bootstrap, as requested.
-Used https://freegeoip.app/ and https://www.metaweather.com/api/ as requested.
+Used https://freegeoip.app/ and https://www.metaweather.com/api/ as requested. (Updated later to use MetaWeather)
 
 See inline comments for walk-through.
 

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'eSalon Weather App') }}</title>
+        <title>{{ config('app.name', 'Swoogo Weather App') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
 
                 <div class="header">
                     <span style="float: left;">
-                        <a href="/"><img src="/img/esalon.png" height="35"></a>
+                        <a href="/"><img src="/img/swoogo.png" height="35"></a>
                         <span style="vertical-align: bottom; margin-left: 20px;">Simple Weather App</span>
                     </span>
                     <span style="float: right;">

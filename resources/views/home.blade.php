@@ -1,14 +1,14 @@
 @include('snippets.header')
 
             <div class="my_weather">
-                <h2>Weather forecast for {{ $weather->title }}</h2>
+                <h2>Weather forecast for {{ $city }}</h2>
 
-
-                @foreach ($weather->consolidated_weather as $today)
+                @foreach ($weather->daily as $today)
+                    @if ($loop->index > 5) @break @endif
                     <div class="card w_card">
                         <!-- Day -->
                         <h5 class="card-title text-center"><?php
-                        $day = new \Carbon\Carbon($today->applicable_date);
+                        $day = new \Carbon\Carbon($today->dt);
                         if ($day->isToday()) {
                             print "Today";
                         } elseif ($day->isTomorrow()) {
@@ -20,24 +20,24 @@
 
                         <!-- Image/Weather forecast -->
                         <div class="card-img-top text-center">
-                            <img src="https://www.metaweather.com/static/img/weather/{{ $today->weather_state_abbr }}.svg" style="height: 60px;">
-                            <br>{{ $today->weather_state_name }}
+                            <img src="http://openweathermap.org/img/wn/{{ $today->weather[0]->icon }}@2x.png" style="height: 60px;">
+                            <br>{{ $today->weather[0]->main }}
                         </div>
 
                         <div class="card-body">
                             <p class="card-text">
                                 <!-- Temperature -->
                                 <div class="temperature">
-                                    {{ \App\Classes\Helpers::centigradeToFahrenheit($today->the_temp) }}&deg;F
+                                    {{ $today->temp->day }}&deg;F
                                 </div>
 
                                 <!-- Low/High -->
                                 <div style="margin: 10px;">
                                     <span class="low">
-                                        {{ \App\Classes\Helpers::centigradeToFahrenheit($today->min_temp) }}&deg;F
+                                        {{ $today->temp->min }}&deg;F
                                     </span>
                                     <span class="high">
-                                        {{ \App\Classes\Helpers::centigradeToFahrenheit($today->max_temp) }}&deg;F
+                                        {{ $today->temp->max }}&deg;F
                                     </span><br>
                                 </div>
 
@@ -45,7 +45,7 @@
                                 <div style="margin: 5px;">
                                     <span class="wind_speed"><img src="/img/wind.png" class="wind_img"></span>
                                     <strong>{{ round($today->wind_speed) }} MPH</strong><br>
-                                    {{ $today->wind_direction_compass }}
+                                    {{ $today->wind_deg }}
                                 </div>
 
                                 <!-- Table of other stats -->
@@ -56,15 +56,11 @@
                                 </tr>
                                 <tr>
                                     <td class="wt_left">Pressure</td>
-                                    <td class="wt_right"><strong>{{ \App\Classes\Helpers::mbToInHg($today->air_pressure) }} in</strong></td>
+                                    <td class="wt_right"><strong>{{ \App\Classes\Helpers::mbToInHg($today->pressure) }} in</strong></td>
                                 </tr>
                                 <tr>
-                                    <td class="wt_left">Visibility</td>
-                                    <td class="wt_right"><strong>{{ round($today->visibility) }} miles</strong></td>
-                                </tr>
-                                <tr>
-                                    <td class="wt_left">Confidence</td>
-                                    <td class="wt_right"><strong>{{ $today->predictability }}%</strong></td>
+                                    <td class="wt_left">UVI</td>
+                                    <td class="wt_right"><strong>{{ round($today->uvi) }}</strong></td>
                                 </tr>
                                 </table>
                             </p>
@@ -73,5 +69,6 @@
                 @endforeach
 
             </div>
+        <br clear="all">
 
 @include('snippets.footer')

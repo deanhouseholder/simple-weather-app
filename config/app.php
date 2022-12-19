@@ -230,4 +230,6 @@ return [
 
     ],
 
+    'freegeoip_token' => env('FREEGEOIP_TOKEN'),
+    'openweather_token' => env('OPENWEATHER_TOKEN'),
 ];
