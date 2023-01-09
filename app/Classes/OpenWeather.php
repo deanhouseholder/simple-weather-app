@@ -19,8 +19,8 @@ class OpenWeather
         $this->token = config('app.openweather_token');
     }
 
-    // Look up woeid by latt/long coordinates
-    public function searchByLattLong($location = null) {
+    // Look up Weather for lat/lon coordinates
+    public function searchByLatLon($location = null) {
         // Check for empty input
         if (empty($location)) {
             throw new \Exception('No $location passed to ' . __CLASS__ . '::' . __FUNCTION__ . '() on line ' . __LINE__);
@@ -43,7 +43,7 @@ class OpenWeather
         }
     }
 
-    // Look up woeid by city name
+    // Look up lat/lon by city name
     public function searchByCityName($location = null) {
         // Check for empty input
         if (empty($location)) {
@@ -51,7 +51,7 @@ class OpenWeather
         }
 
         // Fetch data from API
-        $url = 'https://www.metaweather.com/api/location/search/?query=' . $location;
+        $url = 'https://api.openweathermap.org/geo/1.0/direct?q=' . $location . '&appid=' . $this->token;
         $response = $this->guzzle->get($url);
 
         // Return response or throw exception
@@ -59,7 +59,12 @@ class OpenWeather
             $json = $response->getBody()->getContents();
             $data = json_decode($json);
             if (isset($data[0])) {
-                return $data[0];
+                // Build the structure that will be needed by the searchByLatLon method
+                $return            = new \stdClass();
+                $return->latitude  = $data[0]->lat;
+                $return->longitude = $data[0]->lon;
+                $return->city      = $data[0]->name;
+                return $return;
             } else {
                 throw new \Exception("No results returned");
             }

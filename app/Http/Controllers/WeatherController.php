@@ -33,20 +33,24 @@ class WeatherController extends Controller
             }
 
             // Look up the weather from OpenWeather by latitude/longitude
-            // I chose latt/long because the city name lookup can have collisions
+            // I chose lat/lon because the city name lookup can have collisions
             try {
-                $weather = $openweather->searchByLattLong($location);
+                $weather = $openweather->searchByLatLon($location);
             } catch(Throwable $e) {
                 throw new Exception($e->getMessage());
             }
         } else {
-             // Use search location instead of user's location
-
-            // Look up the OpenWeather "Where On Earth ID" (woeid) by city name
-            // Less accurate than latt/long
+            // Use search location instead of user's location
             try {
-                $location_results = $openweather->searchByCityName($_GET['search']);
-                // d($location_results);
+                // Look up the lat/lon by city name
+                $location = $openweather->searchByCityName(trim($_GET['search']));
+
+                // Fetch the weather
+                try {
+                    $weather = $openweather->searchByLatLon($location);
+                } catch(Throwable $e) {
+                    throw new Exception($e->getMessage());
+                }
             } catch(Throwable $e) {
                 return view('error');
             }
